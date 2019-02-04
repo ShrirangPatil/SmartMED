@@ -6,26 +6,33 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 # Set the pins
-L1, L2  = 15, 16
-R1, R2 = 17, 18
+B1, B2, B3, B4 = 5, 6, 19, 26    # Back wheels (B3, B4) = Right (B1, B2) = Left
+F1, F2, F3, F4 = 12, 16, 20, 21  # Front wheels (F3, F4) = Right (F1, F2) = Left
 SL, SR = 6, 8
 
-# Left wheel pins
-GPIO.setup(L1, GPIO.OUT)
-GPIO.setup(L2, GPIO.OUT)
-# Right wheel pins
-GPIO.setup(R1, GPIO.OUT)
-GPIO.setup(R2, GPIO.OUT)
-# Left Sensor pin
-GPIO.setup(SL, GPIO.OUT)
-# Right Sensor pin
-GPIO.setup(SR, GPIO.OUT)
+# Back wheels
+GPIO.setup(B1, GPIO.OUT)
+GPIO.setup(B2, GPIO.OUT)
+GPIO.setup(B3, GPIO.OUT)
+GPIO.setup(B3, GPIO.OUT)
+
+# Front wheel pins
+GPIO.setup(F1, GPIO.OUT)
+GPIO.setup(F2, GPIO.OUT)
+GPIO.setup(F3, GPIO.OUT)
+GPIO.setup(F4, GPIO.OUT)
 
 def moveForward():
-    GPIO.output(L1, True) #Left
-    GPIO.output(L2, False)
-    GPIO.output(R1, False) #Right
-    GPIO.output(R2, True)
+	# Back wheels
+    GPIO.output(B1, True) #Left
+    GPIO.output(B2, False)
+    GPIO.output(B3, True) #Right
+    GPIO.output(B4, False)
+    # Front wheels
+    GPIO.output(B1, True)
+    GPIO.output(B2, False)
+    GPIO.output(B3, True)
+    GPIO.output(B4, False)
 
 def leftTurn():
     GPIO.output(L1, True)
@@ -61,6 +68,15 @@ def runMotor():
             stop()
             sleep(5)# RFID or glow led or do anything to signal to take medicine
             moveForward()
+def testMotor():
+	while True:
+		moveForward()
+		sleep(1)
+		leftTurn()
+		sleep(1)
+		rightTurn()
+		sleep(1)
+		stop()
 
 def sense(pin):
     sensor = GPIO.input(S1)
