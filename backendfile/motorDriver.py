@@ -10,7 +10,7 @@ B1, B2, B3, B4 = 5, 6, 19, 26    # Back wheels (B3, B4) = Right (B1, B2) = Left
 F1, F2, F3, F4 = 12, 16, 20, 21  # Front wheels (F3, F4) = Right (F1, F2) = Left
 SL, SR = 6, 8
 
-# Back wheels
+# Back wheels pins
 GPIO.setup(B1, GPIO.OUT)
 GPIO.setup(B2, GPIO.OUT)
 GPIO.setup(B3, GPIO.OUT)
@@ -29,10 +29,10 @@ def moveForward():
     GPIO.output(B3, True) #Right
     GPIO.output(B4, False)
     # Front wheels
-    GPIO.output(B1, True)
-    GPIO.output(B2, False)
-    GPIO.output(B3, True)
-    GPIO.output(B4, False)
+    GPIO.output(F1, True)
+    GPIO.output(F2, False)
+    GPIO.output(F3, True)
+    GPIO.output(F4, False)
 
 def leftTurn():
     GPIO.output(L1, True)
@@ -72,11 +72,11 @@ def testMotor():
 	while True:
 		moveForward()
 		sleep(1)
-		leftTurn()
+		#leftTurn()
 		sleep(1)
-		rightTurn()
+		#rightTurn()
 		sleep(1)
-		stop()
+		#stop()
 
 def sense(pin):
     sensor = GPIO.input(S1)
