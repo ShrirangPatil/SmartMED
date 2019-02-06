@@ -1,4 +1,4 @@
-1) Install the Django.(pip install Django==2.1)
+1) Install the Django.(pip install Django==2.1.5)
 2) Open the terminal or cmd prompt.
 3) Migrate to the folder SmartMED.(cd SmartMED)
 4) Run the following command
