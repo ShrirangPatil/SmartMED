@@ -5,6 +5,8 @@ from django.contrib import messages
 # Forms
 from app.forms import homeForm
 
+# Utils
+# from app.utils import motorDriver
 # Create your views here.
 def home(request):
 	if request.method == "POST":
@@ -12,6 +14,14 @@ def home(request):
 		form = homeForm(request.POST)
 		if form.is_valid():
 			movement = form.cleaned_data['movements']
+			if movement == "Forward":
+				print('F')
+			elif movement == "Left":
+				print('L')
+			elif movement == "Right":
+				print('R')
+			else:
+				print('B')
 			messages.success(request, "Vehicle is moving towards "+movement)
 		else:
 			messages.error(request, 'Failed to validate')
