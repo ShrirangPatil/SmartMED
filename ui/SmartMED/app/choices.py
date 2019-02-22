@@ -3,4 +3,5 @@ MOVEMENTS = (
 	("Left", ("Left")),
 	("Right", ("Right")),
 	("Backward", ("Backward")),
+	("Stop", ("Stop")),
 )

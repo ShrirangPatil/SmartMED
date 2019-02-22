@@ -15,13 +15,20 @@ def home(request):
 		if form.is_valid():
 			movement = form.cleaned_data['movements']
 			if movement == "Forward":
+				#motorDriver.moveForward()
 				print('F')
 			elif movement == "Left":
+				#motorDriver.leftTurn()
 				print('L')
 			elif movement == "Right":
+				#motorDriver.rightTurn()
 				print('R')
-			else:
+			elif movement == "Backward":
+				#motorDriver.moveBack()
 				print('B')
+			else:
+				#motorDriver.stop()
+				print('S')
 			messages.success(request, "Vehicle is moving towards "+movement)
 		else:
 			messages.error(request, 'Failed to validate')
