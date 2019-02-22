@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time
+from time import sleep
 
 GPIO.setwarnings(False)
 
@@ -10,11 +10,11 @@ B1, B2, B3, B4 = 5, 6, 19, 26    # Back wheels (B3, B4) = Right (B1, B2) = Left
 F1, F2, F3, F4 = 12, 16, 20, 21  # Front wheels (F3, F4) = Right (F1, F2) = Left
 SL, SR = 6, 8
 
-# Back wheels pins
+# Back wheels
 GPIO.setup(B1, GPIO.OUT)
 GPIO.setup(B2, GPIO.OUT)
 GPIO.setup(B3, GPIO.OUT)
-GPIO.setup(B3, GPIO.OUT)
+GPIO.setup(B4, GPIO.OUT)
 
 # Front wheel pins
 GPIO.setup(F1, GPIO.OUT)
@@ -23,35 +23,70 @@ GPIO.setup(F3, GPIO.OUT)
 GPIO.setup(F4, GPIO.OUT)
 
 def moveForward():
-	# Back wheels
+    # Back wheels
     GPIO.output(B1, True) #Left
     GPIO.output(B2, False)
     GPIO.output(B3, True) #Right
     GPIO.output(B4, False)
+
     # Front wheels
     GPIO.output(F1, True)
     GPIO.output(F2, False)
     GPIO.output(F3, True)
     GPIO.output(F4, False)
 
+def moveBack():
+    # Back wheels
+    GPIO.output(B2, True) #Left
+    GPIO.output(B1, False)
+    GPIO.output(B4, True) #Right
+    GPIO.output(B3, False)
+
+    # Front wheels
+    GPIO.output(F2, True)
+    GPIO.output(F1, False)
+    GPIO.output(F4, True)
+    GPIO.output(F3, False)
+
 def leftTurn():
-    GPIO.output(L1, True)
-    GPIO.output(L2, True)
-    GPIO.output(R1, False)
-    GPIO.output(R2, True)
+    #stop left wheels
+    GPIO.output(F1, False)
+    GPIO.output(F2, False)
+    GPIO.output(B1, False)
+    GPIO.output(B2, False)
+
+    #rotate right wheels
+    GPIO.output(F3, True)
+    GPIO.output(F4, False)
+    GPIO.output(B3, True)
+    GPIO.output(B4, False)
 
 def rightTurn():
-    GPIO.output(L1, True)
-    GPIO.output(L2, False)
-    GPIO.output(R1, True)
-    GPIO.output(R2, True)
+    #rotate right wheels
+    GPIO.output(F1, True)
+    GPIO.output(F2, False)
+    GPIO.output(B1, True)
+    GPIO.output(B2, False)
+
+    #stop right wheels
+    GPIO.output(F3, False)
+    GPIO.output(F4, False)
+    GPIO.output(B3, False)
+    GPIO.output(B4, False)
 
 def stop():
-    GPIO.output(L1, True)
-    GPIO.output(L2, True)
-    GPIO.output(R1, True)
-    GPIO.output(R2, True)
-
+    #back wheels
+    GPIO.output(B1, False) #Left
+    GPIO.output(B2, False)
+    GPIO.output(B3, False) #Right
+    GPIO.output(B4, False)
+    
+    # Front wheels
+    GPIO.output(F1, False)
+    GPIO.output(F2, False)
+    GPIO.output(F3, False)
+    GPIO.output(F4, False)
+"""
 def runMotor():
     #running loop for 10-sec
     t1 = time.time()
@@ -68,15 +103,21 @@ def runMotor():
             stop()
             sleep(5)# RFID or glow led or do anything to signal to take medicine
             moveForward()
+"""
 def testMotor():
-	while True:
-		moveForward()
-		sleep(1)
-		#leftTurn()
-		sleep(1)
-		#rightTurn()
-		sleep(1)
-		#stop()
+    while True:
+        moveForward()
+        sleep(3)
+        leftTurn()
+        sleep(1.5)
+        moveForward()
+        sleep(3)
+        rightTurn()
+        sleep(1.5)
+        moveBack()
+        sleep(2)
+        stop()
+        break
 
 def sense(pin):
     sensor = GPIO.input(S1)
@@ -86,4 +127,4 @@ def sense(pin):
         return 1
 
 if __name__ == "__main__":
-    runMotor()
+    testMotor()
