@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SmartMED</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<!--
+  this is for adding background in body
+  url('{{ STATIC_URL }}/static/background.jpg')
+-->
+<body background="" style="background: #FAE0E0 ;padding-top: 10px; padding-left: 50px; padding-right: 50px">
+    <div class = "container-fluid" style="height: 60px;">
+        <div class = "row h-100 align-items-center" style=" background: #ffffff; padding-left: 40%; margin-top: 50px;">
+            <div class = "col-12" style="">
+                <h1>SmartMED</h1>
+            </div>
+        </div>
+        {% if messages %}
+        <div class = "row h-100 align-items-center" style=" background: #ffffff; padding-left: 40%; margin-top: 50px;">
+            <div class = "col-12" style="">
+                
+                  {% for m in messages %}
+                    <div class="alert alert-sussess">{{ m }}</div>
+                  {% endfor %}
+                
+            </div>
+        </div>
+        {% endif %}
+        <div class="row h-100 align-items-center" style=" background: #ffffff; padding-left: 40%;padding-top: 2%; margin-top: 50px; padding-bottom: 100px">
+            <div class="col-4">
+                <form action="/app/topology/" method='POST' enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div>
+                    <div style="margin-right: 500px">
+                      {{ topologyForm.as_p }}
+                    </div>
+                    <button class="btn btn-primary" style = "margin-top: 70px"type="Submit">Submit</button>
+                  </div>
+                </form>
+            </div>
+            <!--
+            <div class="col-8">
+              <div style="padding-left: 70%">
+                <img src="{% static "background.gif" %}">
+              </div>
+            </div>
+          -->
+        </div>
+    </div>
+</body>
