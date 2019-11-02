@@ -90,11 +90,10 @@ def stop():
     GPIO.output(F3, False)
     GPIO.output(F4, False)
 
-def runMotor(bedNumbers):
+def runMotor():
     #running loop for 10-sec
     #t1 = time.time()
     #t2 = time.time()+3
-    countBedNumber = 0
     while True:
         #t1 = time.time()
         if sense(SL) == 0 and sense(SM)== 1 and sense(SR) == 0:# Move forward
@@ -103,19 +102,15 @@ def runMotor(bedNumbers):
             leftTurn()
         elif sense(SL) == 0 and sense(SR) == 1:# Right Turn (Stop Right Motor)
             rightTurn()
-        elif sense(SL) == 1 and sense(SM) == 1 and sense(SR) == 1:# Stop for 5 sec
-            countBedNumber += 1
-            print(countBedNumber, bedNumbers)
-            if countBedNumber in bedNumbers:
-                stop()
-                os.system('omxplayer /home/pi/Desktop/V2.mp3')
-                sleep(6)
+        elif sense(SL) == 1 and sense(SR) == 1:# Stop for 5 sec
+            stop()
+            os.system('omxplayer /home/pi/Desktop/V2.mp3')
+            sleep(6)
             #sleep(5)# RFID or glow led or do anything to signal to take medicine
             #moveForward()
             
 
-def testMotor(bedNumbers):
-    """
+def testMotor():
     while True:
         moveForward()
         sleep(3)
@@ -129,13 +124,6 @@ def testMotor(bedNumbers):
         sleep(2)
         stop()
         break
-    """
-    for bed in range(6):
-        if bed in bedNumbers:
-            print('Bed number', bed)
-            stop()
-            os.system("omxplayer /home/pi/Desktop/V2.mp3")
-            sleep(2)
 
 def sense(pin):
     sensor = GPIO.input(pin)
