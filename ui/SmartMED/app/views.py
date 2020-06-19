@@ -7,7 +7,7 @@ from app.forms import homeForm
 from app.forms import topologyForm
 
 # All the function calls from utils have been commented, uncomment when running on Raspberry Pi
-# from app.utils import motor as motorDriver
+from app.utils import motor as motorDriver
 
 # Create your views here.
 def home(request):
@@ -47,9 +47,9 @@ def topology(request):
 			beds = form.cleaned_data['beds']
 			try:
 				bedNums = list(map(int, beds.split(' ')))
-				print(bedNums)
-				messages.success(request, "Bot will deliver medicines to beds"+ beds)
-				#motorDriver.runMotor(bedNums)
+				#print(bedNums)
+				messages.success(request, "Bot has delivered medicines to beds "+ beds)
+				motorDriver.runMotor(bedNums)
 			except Exception as e:
 				messages.error(request, "Please enter bed numbers e.g 1 2 3")
 		else:
